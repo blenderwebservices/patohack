@@ -65,9 +65,11 @@
         <div class="text-2xl font-extrabold tracking-tighter">
             <span class="text-sky-400">DIEGO</span><span class="text-rose-500">CANAL</span>
         </div>
-        <div class="flex gap-6">
+        <div class="flex gap-4 md:gap-6 items-center">
             <a href="#proyectos" class="hover:text-sky-400 transition-colors font-semibold">Proyectos</a>
-            <a href="#sobre-mi" class="hover:text-rose-400 transition-colors font-semibold">Sobre Mí</a>
+            <a href="#blog-proyectos" class="hover:text-purple-400 transition-colors font-semibold">Blog</a>
+            <a href="#sobre-mi" class="hover:text-rose-400 transition-colors font-semibold hidden md:block">Sobre Mí</a>
+            <a href="{{ url('/admin') }}" class="px-4 py-2 bg-slate-800 border border-slate-700 rounded-full hover:bg-sky-500 hover:border-sky-400 transition-colors font-bold text-sm">Dashboard</a>
         </div>
     </nav>
 
@@ -187,6 +189,52 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Blog / Proyectos Dinámicos -->
+    <section id="blog-proyectos" class="py-20 px-6 max-w-7xl mx-auto">
+        <div class="mb-16 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Blog & Experimentos</h2>
+            <div class="h-1.5 w-24 bg-rose-500 mx-auto rounded-full"></div>
+            <p class="text-slate-400 mt-4 max-w-2xl mx-auto">Registro en tiempo real de mis aventuras, conceptos y desarrollos. (Protegido por admin)</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            @forelse($projects as $project)
+            <div class="explosive-card rounded-3xl overflow-hidden group">
+                @if($project->image)
+                <div class="h-48 bg-slate-800 flex items-center justify-center overflow-hidden">
+                    <img src="{{ Storage::url($project->image) }}" alt="{{ $project->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+                </div>
+                @else
+                <div class="h-48 bg-gradient-to-br from-indigo-600 to-purple-700 flex items-center justify-center p-8">
+                    <i data-lucide="image" class="w-20 h-20 text-white/50 group-hover:scale-110 transition-transform"></i>
+                </div>
+                @endif
+                <div class="p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-2xl font-bold">{{ $project->title }}</h3>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed mb-6">
+                        {{ Str::limit($project->description, 100) }}
+                    </p>
+                    <div class="flex gap-2 flex-wrap">
+                        @if(is_array($project->tags))
+                            @foreach($project->tags as $tag)
+                                <span class="text-xs font-bold px-3 py-1 bg-slate-700 rounded-full">{{ $tag }}</span>
+                            @endforeach
+                        @endif
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4 align-middle"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i> {{ $project->user->name ?? 'Anon' }}</p>
+                </div>
+            </div>
+            @empty
+            <div class="col-span-full text-center py-12">
+                <i data-lucide="ghost" class="w-16 h-16 text-slate-700 mx-auto mb-4"></i>
+                <p class="text-slate-500 italic text-lg">No hay proyectos publicados aún.</p>
+            </div>
+            @endforelse
         </div>
     </section>
 

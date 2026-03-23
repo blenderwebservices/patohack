@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diego Gabriel Morales Zumaya | Portafolio Creativo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
@@ -216,17 +216,24 @@
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-2xl font-bold">{{ $project->title }}</h3>
                     </div>
-                    <p class="text-slate-400 leading-relaxed mb-6">
-                        {{ Str::limit($project->description, 100) }}
-                    </p>
-                    <div class="flex gap-2 flex-wrap">
+                    <div class="text-slate-400 leading-relaxed mb-6 prose prose-invert prose-slate max-w-none prose-sm">
+                        {!! $project->description !!}
+                    </div>
+                    <div class="flex gap-2 flex-wrap mb-4">
                         @if(is_array($project->tags))
                             @foreach($project->tags as $tag)
                                 <span class="text-xs font-bold px-3 py-1 bg-slate-700 rounded-full">{{ $tag }}</span>
                             @endforeach
                         @endif
                     </div>
-                    <p class="text-xs text-slate-500 mt-4 align-middle"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i> {{ $project->user->name ?? 'Anon' }}</p>
+                    @if($project->link)
+                    <div class="mb-4">
+                        <a href="{{ $project->link }}" target="_blank" class="inline-flex items-center gap-2 text-sky-400 hover:text-sky-300 transition-colors font-bold text-sm">
+                            <i data-lucide="external-link" class="w-4 h-4"></i> Ver Proyecto
+                        </a>
+                    </div>
+                    @endif
+                    <p class="text-xs text-slate-500 align-middle"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i> {{ $project->user->name ?? 'Anon' }}</p>
                 </div>
             </div>
             @empty

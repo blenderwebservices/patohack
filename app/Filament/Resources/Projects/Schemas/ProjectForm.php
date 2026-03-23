@@ -13,12 +13,15 @@ class ProjectForm
                 \Filament\Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                \Filament\Forms\Components\Textarea::make('description')
-                    ->maxLength(65535)
+                \Filament\Forms\Components\RichEditor::make('description')
                     ->columnSpanFull(),
                 \Filament\Forms\Components\FileUpload::make('image')
-                    ->image(),
+                    ->image()
+                    ->directory('projects'),
                 \Filament\Forms\Components\TagsInput::make('tags'),
+                \Filament\Forms\Components\TextInput::make('link')
+                    ->url()
+                    ->maxLength(255),
                 \Filament\Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->required(),

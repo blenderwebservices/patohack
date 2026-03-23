@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 
-#[Fillable(['title', 'description', 'image', 'tags', 'user_id'])]
+#[Fillable(['title', 'description', 'image', 'tags', 'link', 'user_id'])]
 class Project extends Model
 {
     public function user(): BelongsTo
